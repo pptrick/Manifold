@@ -31,3 +31,8 @@ build*
 *.exe
 *.out
 *.app
+
+# Python
+dist
+*.egg-info
+src/wrapper.cpp
