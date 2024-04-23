@@ -2,6 +2,16 @@
 #include <queue>
 #define ITER_NUM 20
 int g_sharp = 0;
+
+int mesh2manifold(const vector<float>& verts, const vector<int>& faces, char* filename, int resolution){
+	Model_OBJ obj;
+	obj.Load(verts, faces);
+	// NOTE: always set g_sharp = 0
+	obj.Process_Manifold(resolution);
+	obj.SaveOBJ(filename);
+	return 0;
+}
+
 Model_OBJ::Model_OBJ()
 {
 }
@@ -23,6 +33,20 @@ int Model_OBJ::Load(char* filename)
     	face_indices[i] = glm::ivec3(F(i,0),F(i,1),F(i,2));
 	}
 
+	return 0;
+}
+
+int Model_OBJ::Load(vector<float> verts, vector<int> faces){
+	srand(0);
+	int n_verts = int(verts.size() / 3);
+	int n_faces = int(faces.size() / 3);
+    vertices.resize(n_verts);
+    face_indices.resize(n_faces);
+	for (int i = 0; i < n_verts; ++i)
+    	vertices[i] = glm::dvec3(verts[3*i], verts[3*i+1], verts[3*i+2]);
+    for (int i = 0; i < n_faces; ++i) {
+    	face_indices[i] = glm::ivec3(faces[3*i], faces[3*i+1], faces[3*i+2]);
+	}
 	return 0;
 }
  

@@ -35,6 +35,7 @@ class Model_OBJ
 
 	Model_OBJ();			
   int Load(char *filename);	// Loads the model
+  int Load(vector<float> verts, vector<int> faces); // Loads model from vertex / face buffer
 
  	void Calc_Bounding_Box();
 
@@ -75,5 +76,7 @@ class Model_OBJ
   Eigen::MatrixXi F;
 
 };
+
+int mesh2manifold(const vector<float>& verts, const vector<int>& faces, char* filename, int resolution);
 
 #endif
