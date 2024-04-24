@@ -77,6 +77,6 @@ class Model_OBJ
 
 };
 
-int mesh2manifold(const vector<float>& verts, const vector<int>& faces, char* filename, int resolution);
+int mesh2manifold(const vector<float>& verts, const vector<int>& faces, char* filename, int resolution, bool sharp);
 
 #endif

@@ -3,10 +3,12 @@
 #define ITER_NUM 20
 int g_sharp = 0;
 
-int mesh2manifold(const vector<float>& verts, const vector<int>& faces, char* filename, int resolution){
+int mesh2manifold(const vector<float>& verts, const vector<int>& faces, char* filename, int resolution, bool sharp){
 	Model_OBJ obj;
 	obj.Load(verts, faces);
-	// NOTE: always set g_sharp = 0
+	if(sharp){
+		g_sharp = 1;
+	}
 	obj.Process_Manifold(resolution);
 	obj.SaveOBJ(filename);
 	return 0;
