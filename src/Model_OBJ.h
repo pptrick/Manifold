@@ -39,7 +39,7 @@ class Model_OBJ
 
  	void Calc_Bounding_Box();
 
-  void Process_Manifold(int resolution);
+  int Process_Manifold(int resolution);
   void Build_Tree(int resolution);
   void Build_BVH();
   void Construct_Manifold();

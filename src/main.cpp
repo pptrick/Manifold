@@ -27,7 +27,14 @@ int main(int argc, char** argv)
   }
   printf("manifold %s %s %d\n", argv[1], argv[2], resolution);
 
-  obj.Process_Manifold(resolution);
-  obj.SaveOBJ(argv[2]);
-   return 0; 
+  int status = obj.Process_Manifold(resolution);
+  if (status == 0){
+    obj.SaveOBJ(argv[2]);
+    return 0; 
+  }
+  else{
+    cout << "Failed to save model." << endl;
+    return 1;
+  }
+  
 }

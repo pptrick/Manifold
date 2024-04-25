@@ -9,9 +9,14 @@ int mesh2manifold(const vector<float>& verts, const vector<int>& faces, char* fi
 	if(sharp){
 		g_sharp = 1;
 	}
-	obj.Process_Manifold(resolution);
-	obj.SaveOBJ(filename);
-	return 0;
+	int status = obj.Process_Manifold(resolution);
+	if (status == 0){
+		obj.SaveOBJ(filename);
+		return 0;
+	}
+	else {
+		return 1;
+	}
 }
 
 Model_OBJ::Model_OBJ()
@@ -512,7 +517,7 @@ void Model_OBJ::Build_BVH()
 //	bvh->updateBVH(bvs, 0, 0, bvs.size()-1);
 }
 
-void Model_OBJ::Process_Manifold(int resolution)
+int Model_OBJ::Process_Manifold(int resolution)
 {
 	vertices_buf = vertices;
 	face_indices_buf = face_indices;
@@ -546,12 +551,10 @@ void Model_OBJ::Process_Manifold(int resolution)
 	int flag = is_manifold();
 	if (flag != 0)
 	{
-		ofstream os("error.txt");
-		os << fn << "\n";
-		os.close();
 		cout << "Not a Manifold! " << flag << "\n";
-		exit(0);
+		return 1;
 	}
+	return 0;
 }
 
 bool Model_OBJ::Split_Grid(map<Grid_Index,int>& vcolor, vector<glm::dvec3>& nvertices, vector<glm::ivec4>& nface_indices, vector<set<int> >& v_faces, vector<glm::ivec3>& triangles)
