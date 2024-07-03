@@ -36,3 +36,5 @@ build*
 dist
 *.egg-info
 src/wrapper.cpp
+.venv
+MANIFEST

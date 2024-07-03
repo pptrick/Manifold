@@ -219,7 +219,7 @@ void Model_OBJ::Construct_Manifold()
 	vector<glm::dvec3> nvertices;
 	vector<glm::ivec4> nface_indices;
 	vector<glm::ivec3> triangles;
-	tree->ConstructFace(vcolor,glm::ivec3(0,0,0),nvertices,nface_indices, v_faces);
+	tree->ConstructFace(vcolor, glm::ivec3(0,0,0), nvertices, nface_indices, v_faces);
 	Split_Grid(vcolor, nvertices, nface_indices, v_faces, triangles);
 	vector<int> hash_v(nvertices.size(),0);
 	for (int i = 0; i < (int)triangles.size(); ++i)
@@ -256,6 +256,7 @@ glm::dvec3 Model_OBJ::Find_Closest(int i)
 	glm::dvec3 cpoint = glm::dvec3(1e20,1e20,1e20);
 	glm::dvec3 tris[3];
 	glm::dvec3 normal;
+	bool set_cpoint = false;
 	for (set<int>::iterator it = v_faces[i].begin();
 		it != v_faces[i].end(); ++it)
 	{
@@ -269,7 +270,11 @@ glm::dvec3 Model_OBJ::Find_Closest(int i)
 			if (glm::dot(normal,vertices[i]-cpoint)<0)
 				normal = -normal;
 			cpoint = p;
+			set_cpoint = true;
 		}
+	}
+	if (!set_cpoint) {
+		cpoint = vertices[i];
 	}
 	return cpoint + normal * 5e-4;
 }
