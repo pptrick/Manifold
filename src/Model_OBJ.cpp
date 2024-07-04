@@ -255,7 +255,6 @@ glm::dvec3 Model_OBJ::Find_Closest(int i)
 {
 	glm::dvec3 cpoint = glm::dvec3(1e20,1e20,1e20);
 	glm::dvec3 tris[3];
-	glm::dvec3 normal;
 	bool set_cpoint = false;
 	for (set<int>::iterator it = v_faces[i].begin();
 		it != v_faces[i].end(); ++it)
@@ -266,9 +265,6 @@ glm::dvec3 Model_OBJ::Find_Closest(int i)
 		glm::dvec3 p = Closest_Point(tris, vertices[i]);
 		if (glm::length(p-vertices[i]) < glm::length(cpoint-vertices[i]))
 		{
-			normal = glm::normalize(glm::cross(tris[1]-tris[0],tris[2]-tris[0]));
-			if (glm::dot(normal,vertices[i]-cpoint)<0)
-				normal = -normal;
 			cpoint = p;
 			set_cpoint = true;
 		}
@@ -276,7 +272,7 @@ glm::dvec3 Model_OBJ::Find_Closest(int i)
 	if (!set_cpoint) {
 		cpoint = vertices[i];
 	}
-	return cpoint + normal * 5e-4;
+	return cpoint;
 }
 
 void Model_OBJ::Project_Manifold()

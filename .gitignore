@@ -38,3 +38,5 @@ dist
 src/wrapper.cpp
 .venv
 MANIFEST
+*.obj
+*.glb
